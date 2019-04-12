@@ -35,6 +35,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "prop-types": "^15.7.2"
   }
 }
