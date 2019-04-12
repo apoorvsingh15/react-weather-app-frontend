@@ -22,6 +22,8 @@ const SimpleAppBar = props => {
     setAppEnvironment(!appEnvironment);
   };
 
+  props.getChildData(appEnvironment);
+
   return (
     <div className={classes.root}>
       <AppBar
@@ -49,7 +51,8 @@ const SimpleAppBar = props => {
 };
 
 SimpleAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  getChildData: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SimpleAppBar);

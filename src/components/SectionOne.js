@@ -1,22 +1,31 @@
 import React from "react";
-import { object } from "prop-types";
+import { object, bool } from "prop-types";
 import Button from "@material-ui/core/Button";
-const SectionOne = props => (
-  <div className="background-image">
-    <div className="center-content">
-      <Button
-        onClick={() => props.fullpageApi.moveSectionDown()}
-        variant="contained"
-        color="primary"
-      >
-        Click
-      </Button>
+const SectionOne = props => {
+  const moveToNextSection = () => (
+    console.log(props.coordinates, "<====coordinates 1"),
+    props.fullpageApi.moveSectionDown(),
+    console.log("2")
+  );
+
+  return (
+    <div className="background-image">
+      <div className="center-content">
+        <Button
+          onClick={moveToNextSection}
+          variant="contained"
+          color={props.appEnvironment === true ? "default" : "primary"}
+        >
+          Click
+        </Button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 SectionOne.propTypes = {
-  fullpageApi: object
+  fullpageApi: object,
+  appEnvironment: bool.isRequired
 };
 
 SectionOne.defaultProps = {

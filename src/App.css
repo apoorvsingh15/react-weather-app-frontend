@@ -2,6 +2,18 @@
   background-image: url("./assets/background_1.jpg");
   height: 100%;
   width: 100%;
+  position: relative;
+}
+
+.background-image:before {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  content: "";
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .center-content {
