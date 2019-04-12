@@ -3,17 +3,42 @@ import ReactFullpage from "@fullpage/react-fullpage";
 import SectionOne from "../components/SectionOne";
 import SimpleAppBar from "../components/AppBar";
 import { geolocated } from "react-geolocated";
+import { object, bool } from "prop-types";
+import axios from "axios";
+const APPID = "7df65df52a9b0e808273021697f44b36";
 class Main extends PureComponent {
+  static propTypes = {
+    coords: object.isRequired,
+    isGeolocationAvailable: bool
+  };
+
+  static defaultProps = {
+    isGeolocationAvailable: true
+  };
   state = {
     appEnvironment: ""
   };
 
   componentDidMount = () => {
-    console.log(
-      this.props.coords,
-      this.props.isGeolocationAvailable,
-      "<-=====cords"
-    );
+    axios
+      .post(
+        `api.openweathermap.org/data/2.5/weather?lat=${this.props.coords &&
+          this.props.coords.latitude}&lon=${this.props.coords &&
+          this.props.coords.longitude}&APPID=${APPID}`
+      )
+      .then(res => console.log(res).catch(err => console.log(err)));
+  };
+
+  componentDidUpdate = prevProps => {
+    if (this.props.coords !== null) {
+      axios
+        .post(
+          `api.openweathermap.org/data/2.5/weather?lat=${this.props.coords &&
+            this.props.coords.latitude}&lon=${this.props.coords &&
+            this.props.coords.longitude}&APPID=${APPID}`
+        )
+        .then(res => console.log(res).catch(err => console.log(err)));
+    }
   };
 
   getChildData = data => {
@@ -22,6 +47,7 @@ class Main extends PureComponent {
 
   render() {
     const { appEnvironment } = this.state;
+    const { coords } = this.props;
 
     return (
       <Fragment>
@@ -34,11 +60,11 @@ class Main extends PureComponent {
                   <SectionOne
                     fullpageApi={fullpageApi}
                     appEnvironment={appEnvironment}
-                    coordinates={this.props.coords}
+                    coordinates={coords}
                   />
                 </div>
                 <div className="section">
-                  <p>{this.props.coords && this.props.coords.latitude}</p>
+                  <p>{coords && coords.latitude}</p>
                 </div>
               </ReactFullpage.Wrapper>
             );

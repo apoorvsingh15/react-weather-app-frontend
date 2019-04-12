@@ -9,14 +9,20 @@ const SectionOne = props => {
   );
 
   return (
-    <div className="background-image">
+    <div
+      className={
+        props.appEnvironment === true
+          ? "background-image"
+          : "dark-background-image"
+      }
+    >
       <div className="center-content">
         <Button
           onClick={moveToNextSection}
           variant="contained"
           color={props.appEnvironment === true ? "default" : "primary"}
         >
-          Click
+          Current Weather Info
         </Button>
       </div>
     </div>
@@ -25,7 +31,8 @@ const SectionOne = props => {
 
 SectionOne.propTypes = {
   fullpageApi: object,
-  appEnvironment: bool.isRequired
+  appEnvironment: bool.isRequired,
+  coordinates: object.isRequired
 };
 
 SectionOne.defaultProps = {

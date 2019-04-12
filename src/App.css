@@ -5,7 +5,26 @@
   position: relative;
 }
 
+.dark-background-image {
+  background-image: url("./assets/dark_background_1.jpg");
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background-size: cover;
+}
+
 .background-image:before {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  content: "";
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.dark-background-image:before {
   height: 100%;
   width: 100%;
   position: absolute;
