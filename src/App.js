@@ -5,7 +5,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Main dummy={10} />
+        <Main />
       </div>
     );
   }
