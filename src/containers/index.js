@@ -5,39 +5,33 @@ import SimpleAppBar from "../components/AppBar";
 import { geolocated } from "react-geolocated";
 import { object, bool } from "prop-types";
 import axios from "axios";
+import SectionTwo from "../components/SectionTwo";
 const APPID = "7df65df52a9b0e808273021697f44b36";
 class Main extends PureComponent {
   static propTypes = {
-    coords: object.isRequired,
+    coords: object,
     isGeolocationAvailable: bool
   };
 
   static defaultProps = {
-    isGeolocationAvailable: true
+    isGeolocationAvailable: true,
+    coords: null
   };
   state = {
-    appEnvironment: ""
-  };
-
-  componentDidMount = () => {
-    axios
-      .post(
-        `api.openweathermap.org/data/2.5/weather?lat=${this.props.coords &&
-          this.props.coords.latitude}&lon=${this.props.coords &&
-          this.props.coords.longitude}&APPID=${APPID}`
-      )
-      .then(res => console.log(res).catch(err => console.log(err)));
+    appEnvironment: true,
+    responseData: {}
   };
 
   componentDidUpdate = prevProps => {
-    if (this.props.coords !== null) {
+    let { coords } = this.props;
+    if (this.props.coords !== prevProps.coords) {
       axios
         .post(
-          `api.openweathermap.org/data/2.5/weather?lat=${this.props.coords &&
-            this.props.coords.latitude}&lon=${this.props.coords &&
-            this.props.coords.longitude}&APPID=${APPID}`
+          `http://api.openweathermap.org/data/2.5/weather?lat=${coords &&
+            coords.latitude}&lon=${coords && coords.longitude}&APPID=${APPID}`
         )
-        .then(res => console.log(res).catch(err => console.log(err)));
+        .then(res => this.setState({ responseData: res }))
+        .catch(err => console.log(err));
     }
   };
 
@@ -46,7 +40,7 @@ class Main extends PureComponent {
   };
 
   render() {
-    const { appEnvironment } = this.state;
+    const { appEnvironment, responseData } = this.state;
     const { coords } = this.props;
 
     return (
@@ -64,7 +58,7 @@ class Main extends PureComponent {
                   />
                 </div>
                 <div className="section">
-                  <p>{coords && coords.latitude}</p>
+                  <SectionTwo responseData={responseData} />
                 </div>
               </ReactFullpage.Wrapper>
             );

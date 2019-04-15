@@ -2,11 +2,7 @@ import React from "react";
 import { object, bool } from "prop-types";
 import Button from "@material-ui/core/Button";
 const SectionOne = props => {
-  const moveToNextSection = () => (
-    console.log(props.coordinates, "<====coordinates 1"),
-    props.fullpageApi.moveSectionDown(),
-    console.log("2")
-  );
+  const moveToNextSection = () => props.fullpageApi.moveSectionDown();
 
   return (
     <div
@@ -32,11 +28,12 @@ const SectionOne = props => {
 SectionOne.propTypes = {
   fullpageApi: object,
   appEnvironment: bool.isRequired,
-  coordinates: object.isRequired
+  coordinates: object
 };
 
 SectionOne.defaultProps = {
-  fullpageApi: {}
+  fullpageApi: {},
+  coordinates: null
 };
 
 export default SectionOne;
