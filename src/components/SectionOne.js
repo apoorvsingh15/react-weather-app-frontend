@@ -21,6 +21,19 @@ const SectionOne = props => {
           Current Weather Info
         </Button>
       </div>
+      <h1
+        onClick={moveToNextSection}
+        className="animated infinite bounce"
+        style={{
+          position: "absolute",
+          bottom: 0,
+          color: props.appEnvironment === true ? "white" : "#3f51b5",
+          zIndex: "99999999",
+          right: 20
+        }}
+      >
+        <i className="fas fa-arrow-down" />
+      </h1>
     </div>
   );
 };
