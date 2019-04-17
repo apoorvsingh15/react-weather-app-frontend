@@ -1,15 +1,17 @@
 import React, { PureComponent } from "react";
 import Card from "@material-ui/core/Card";
 import { Grid } from "@material-ui/core";
-import { object } from "prop-types";
+import { object, bool } from "prop-types";
 
 export default class SectionTwo extends PureComponent {
   static propTypes = {
-    responseData: object
+    responseData: object,
+    animateSectionTwo: bool
   };
 
   static defaultProps = {
-    responseData: {}
+    responseData: {},
+    animateSectionTwo: false
   };
   state = {};
 
@@ -25,15 +27,9 @@ export default class SectionTwo extends PureComponent {
 
   render() {
     const { responseData, animateSectionTwo } = this.props;
-    console.log(responseData, "<==dataResponse");
-
     const cityName = responseData.data && responseData.data.name;
     const weatherInfo = responseData.data && responseData.data.weather;
     const tempInfo = responseData.data && responseData.data.main;
-
-    console.log(tempInfo, "<===tempInfo");
-
-    console.log(weatherInfo, animateSectionTwo, "<=====weatherInfo");
 
     return (
       <Grid>
@@ -63,7 +59,11 @@ export default class SectionTwo extends PureComponent {
           </Grid>
           <Grid
             container
-            className={animateSectionTwo ? "animated rubberBand" : ""}
+            className={
+              animateSectionTwo
+                ? "animated rubberBand container-padding"
+                : "container-padding"
+            }
           >
             <Grid item lg={4} xs={4} sm={4}>
               <Card>{this.kelvinToCelsius(tempInfo && tempInfo.temp)}</Card>
