@@ -12,20 +12,40 @@ export default class SectionTwo extends PureComponent {
     responseData: {}
   };
   state = {};
+
+  kelvinToCelsius = temp => {
+    let convertedTemp = temp - 273.15;
+    return convertedTemp;
+  };
+
+  kelvinToFahrenheit = temp => {
+    let convertedTemp = (temp - 273.15) * (9 / 5) + 32;
+    return convertedTemp;
+  };
+
   render() {
-    const { responseData } = this.props;
+    const { responseData, animateSectionTwo } = this.props;
     console.log(responseData, "<==dataResponse");
 
     const cityName = responseData.data && responseData.data.name;
     const weatherInfo = responseData.data && responseData.data.weather;
+    const tempInfo = responseData.data && responseData.data.main;
 
-    console.log(weatherInfo, "<=====weatherInfo");
+    console.log(tempInfo, "<===tempInfo");
+
+    console.log(weatherInfo, animateSectionTwo, "<=====weatherInfo");
 
     return (
       <Grid>
         <Grid container>
-          <Grid item lg={12}>
-            <Card style={{ borderRadius: 5, background: "blue" }}>
+          <Grid item lg={12} xs={12} sm={12}>
+            <Card
+              className={
+                animateSectionTwo
+                  ? "weather-card animated zoomIn"
+                  : "weather-card"
+              }
+            >
               <h1 style={{ textAlign: "center" }}>{cityName} Weather</h1>
               <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                 <p>
@@ -37,9 +57,23 @@ export default class SectionTwo extends PureComponent {
                   <span>{weatherInfo && weatherInfo[0].main}</span>
                 </p>
 
-                <p>fuckin {weatherInfo && weatherInfo[0].description}</p>
+                <p>{weatherInfo && weatherInfo[0].description}</p>
               </div>
             </Card>
+          </Grid>
+          <Grid
+            container
+            className={animateSectionTwo ? "animated rubberBand" : ""}
+          >
+            <Grid item lg={4} xs={4} sm={4}>
+              <Card>{this.kelvinToCelsius(tempInfo && tempInfo.temp)}</Card>
+            </Grid>
+            <Grid item lg={4} xs={4} sm={4}>
+              <Card>{tempInfo && tempInfo.pressure}</Card>
+            </Grid>
+            <Grid item lg={4} xs={4} sm={4}>
+              <Card>{tempInfo && tempInfo.humidity}</Card>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
