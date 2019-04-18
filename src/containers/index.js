@@ -19,6 +19,7 @@ class Main extends PureComponent {
   };
   state = {
     appEnvironment: true,
+    animateSectionTwo: false,
     responseData: {}
   };
 
@@ -40,13 +41,21 @@ class Main extends PureComponent {
   };
 
   render() {
-    const { appEnvironment, responseData } = this.state;
+    const { appEnvironment, responseData, animateSectionTwo } = this.state;
     const { coords } = this.props;
 
     return (
       <Fragment>
         <SimpleAppBar getChildData={this.getChildData} />
         <ReactFullpage
+          onLeave={(origin, destination, direction) => {
+            console.log("onLeave event", { origin, destination, direction });
+            direction === "down"
+              ? this.setState({ animateSectionTwo: true })
+              : direction === "up"
+              ? this.setState({ animateSectionTwo: false })
+              : this.setState({ animateSectionTwo: false });
+          }}
           render={({ fullpageApi }) => {
             return (
               <ReactFullpage.Wrapper>
@@ -58,7 +67,10 @@ class Main extends PureComponent {
                   />
                 </div>
                 <div className="section">
-                  <SectionTwo responseData={responseData} />
+                  <SectionTwo
+                    animateSectionTwo={animateSectionTwo}
+                    responseData={responseData}
+                  />
                 </div>
               </ReactFullpage.Wrapper>
             );
